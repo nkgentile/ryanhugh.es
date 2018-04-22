@@ -1,0 +1,22 @@
+html {
+}
+
+body {
+  margin: 0;
+}
+
+p {
+  max-width: var(--text-width-max);
+}
+
+p:not(first-of-type){
+  margin-top: 1rem;
+}
+
+em {
+  font-style: italic;
+}
+
+a, a:link, a:visited {
+  color: inherit;
+}
