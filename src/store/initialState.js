@@ -1,11 +1,5 @@
 const initialState = {
-  assets: [],
-  entries: [],
-
-  deletedAssets: [],
-  deletedEntries: [],
-
-  nextSyncToken: '',
+  api: {},
 };
 
 export default initialState;

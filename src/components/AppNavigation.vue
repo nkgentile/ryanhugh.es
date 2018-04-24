@@ -1,8 +1,6 @@
 <template>
   <nav :class="$style.container">
-    <navigation-link to="/">
-      {{ title }}
-    </navigation-link>
+    <navigation-breadcrumb/>
     <navigation-bar/>
   </nav>
 </template>
@@ -23,11 +21,13 @@
 
   import NavigationBar from '@/components/NavigationBar';
   import NavigationLink from '@/components/NavigationLink';
+  import NavigationBreadcrumb from '@/components/NavigationBreadcrumb';
 
   export default {
     components: {
       NavigationBar,
       NavigationLink,
+      NavigationBreadcrumb,
     },
 
     computed: {

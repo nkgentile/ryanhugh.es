@@ -4,7 +4,7 @@ import {
   lensPath,
   path,
   pathOr,
-  _,
+  __ as _,
   mergeWith,
   prop,
   over,
@@ -15,6 +15,8 @@ import {
   compose,
   map,
   empty,
+  concat,
+  pair,
 } from 'ramda';
 
 
@@ -28,15 +30,11 @@ export default client;
 export const fieldLens = (field) =>
   lensPath(fieldPath(field));
 
-export const fieldPath = (field) => [
-  'fields',
-  field,
-  'en-US'
-];
+export const fieldPath = pair('fields');
 
 export const field = (field) => path(fieldPath(field));
 
-export const fieldOr = (or, field) => pathOr(or, fieldPath(field));
+export const fieldOr = (field) => pathOr(_, fieldPath(field));
 
 export const localizeEntry = (locale) =>
   over(

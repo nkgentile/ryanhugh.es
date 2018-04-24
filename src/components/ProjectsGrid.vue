@@ -1,45 +1,61 @@
 <template>
-  <section :class="$style.container">
+  <ul :class="$style.list">
     <template v-for="project in projects">
-      <grid-item
-        :entity="project"
-        :key="project.sys.id"
+      <project-card
+        :project="localizeEntry(project)"
+        :class="$style.item"
       />
     </template>
-  </section>
+  </ul>
 </template>
 
 <script>
-  import {
-    mapGetters,
+  import { 
+    createNamespacedHelpers,
   } from 'vuex';
+  const { mapState } = createNamespacedHelpers('portfolio');
+
+  import {
+    pathOr,
+  } from 'ramda';
 
   import {
     fieldOr,
+    fieldPath,
+    localizeEntry,
   } from '@/utils/contentful';
 
-  import GridItem from '@/components/ProjectGridItem';
+  import ProjectCard from '@/components/ProjectCardFullBleed';
 
   export default {
     components: {
-      GridItem,
+      ProjectCard,
     },
 
     computed: {
-      ...mapGetters([
-        'getEntry',
-      ]),
-
-      portfolio(){
-        return this.getEntry('portfolio');
-      },
+      ...mapState({
+        portfolio: 'entry',
+      }),
 
       projects(){
-        return fieldOr([], 'projects')(this.portfolio);
+        return pathOr([], ['fields', 'projects'], this.portfolio);
       },
+    },
+
+    methods: {
+      localizeEntry: localizeEntry('en-US'),
     },
   };
 </script>
 
 <style module>
+  .list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 20rem;
+    grid-gap: 1rem;
+  }
+
+  .item {
+  }
 </style>

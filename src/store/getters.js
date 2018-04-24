@@ -15,7 +15,7 @@ import {
 } from '@/utils/contentful';
 
 const getters = {
-  getEntries: ({ entries }) => (contentType) => {
+  getEntries: ({ api: { entries } }) => (contentType) => {
     const pathToContentType = [
       'sys',
       'contentType',
@@ -45,7 +45,6 @@ const getters = {
   },
 
   getEntry: (state, { getEntries }) => pipe(getEntries, head),
-
 };
 
 export default getters;

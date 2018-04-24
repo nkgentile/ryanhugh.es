@@ -1,19 +1,20 @@
 <template>
-  <main>
-    <app-navigation/>
-    <projects-grid/>
-  </main>
+  <article-template>
+    <main>
+      <projects-grid/>
+    </main>
+  </article-template>
 </template>
 
 <script>
-  import AppNavigation from '@/components/AppNavigation';
+  import ArticleTemplate from '@/templates/Article';
   import ProjectsGrid from '@/components/ProjectsGrid';
 
   export default {
     name: 'Projects',
 
     components: {
-      AppNavigation,
+      ArticleTemplate,
       ProjectsGrid,
     },
   };

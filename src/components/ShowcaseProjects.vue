@@ -1,15 +1,14 @@
 <template>
   <touch-gallery
-    v-if="isNotEmpty(heroes)"
     :class="$style.container"
-    :length="heroes.length"
+    :length="showcase.length"
   >
     <template slot-scope="{ index }">
       <project-card 
-        v-for="(project, i) in localizedProjects"
+        v-for="(project, i) in showcase"
         :key="project.sys.id"
         v-if="i === index"
-        :project="project"
+        :project="localizeEntry('en-US')(project)"
       />
     </template>
   </touch-gallery>
@@ -23,9 +22,9 @@
   } from 'ramda';
 
   import {
-    mapState,
-    mapGetters,
+    createNamespacedHelpers,
   } from 'vuex';
+  const { mapState } = createNamespacedHelpers('portfolio');
 
   import {
     fieldOr,
@@ -42,35 +41,17 @@
     },
 
     computed: {
-      ...mapGetters([
-        'getEntry',
-      ]),
-
-      portfolio(){
-        return this.getEntry('portfolio');
-      },
+      ...mapState({
+        portfolio: 'entry',
+      }),
 
       showcase(){
-        return pathOr(
-          [],
-          ['fields', 'showcase']
-        )(this.portfolio);
+        return pathOr([], ['fields', 'showcase'], this.portfolio);
       },
+    },
 
-      localizedProjects(){
-        return map(
-          localizeEntry('en-US'),
-          this.showcase
-        );
-      },
-
-      heroes(){
-        return map(
-          pathOr({}, ['fields', 'hero']),
-          this.localizedProjects
-        );
-      },
-
+    methods: {
+      localizeEntry,
     },
   };
 </script>

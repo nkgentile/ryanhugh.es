@@ -36,12 +36,14 @@
   } from 'ramda';
 
   import {
-    mapGetters,
+    createNamespacedHelpers,
   } from 'vuex';
+  const { mapState } = createNamespacedHelpers('portfolio');
 
   import {
     fieldOr,
     field,
+    localizeEntry,
   } from '@/utils/contentful';
 
   import NavigationLink from '@/components/NavigationLink';
@@ -52,20 +54,18 @@
     },
 
     computed: {
-      ...mapGetters([
-        'getEntry',
-      ]),
-
-      portfolio(){
-        return this.getEntry('portfolio');
-      },
+      ...mapState({
+        portfolio: 'entry',
+      }),
 
       projects(){
-        return pathOr([], ['fields', 'projects'], this.portfolio);
+        return pathOr([], ['fields', 'projects'], this.portfolio)
+          .map(localizeEntry('en-US'));
       },
 
       socialAccounts(){
-        return pathOr([], ['fields', 'socialAccounts'], this.portfolio);
+        return pathOr([], ['fields', 'socialAccounts'], this.portfolio)
+          .map(localizeEntry('en-US'));
       },
     },
 
@@ -92,6 +92,8 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-auto-rows: min-content;
+
+    position: relative;
   }
 
   .item:hover .children {
@@ -107,5 +109,8 @@
 
     display: grid;
     grid-auto-rows: min-content;
+
+    position: absolute;
+    top: 1.33rem;
   }
 </style>

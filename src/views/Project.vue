@@ -1,13 +1,12 @@
 <template>
-  <article v-if="isNotEmpty(project)" :class="$style.container">
-    <header>
-      <h1>
-        <router-link to="/">
-          Ryan Hughes,
-        </router-link>
-        {{ project.fields.name }}
-      </h1>
+  <article-template
+    v-if="isNotEmpty(project)"
+    :class="$style.container"
+  >
+    <header :class="$style.header">
+      <h1>{{ project.fields.name }}</h1>
     </header>
+
     <main :class="$style.body">
 
       <section :class="$style.text">
@@ -39,7 +38,7 @@
 
     </main>
 
-  </article>
+  </article-template>
 </template>
 
 <script>
@@ -72,12 +71,16 @@
   } = createNamespacedHelpers('route');
 
   import ProjectGallery from '@/components/ProjectGallery';
+  import ArticleTemplate from '@/templates/Article';
+  import ProjectBreadcrumb from '@/components/ProjectBreadcrumb';
 
   export default {
     name: 'Project',
 
     components: {
+      ArticleTemplate,
       ProjectGallery,
+      ProjectBreadcrumb,
     },
 
     computed: {
@@ -113,25 +116,15 @@
 </script>
 
 <style module>
-  .container {
-    --spacing: 3rem;
-    position: relative;
-
+  .header {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-auto-rows: auto;
-    grid-gap: var(--spacing);
-    justify-items: center;
-
-    box-sizing: border-box;
-    padding-top: var(--app-margin);
-    padding-bottom: var(--app-margin);
+    justify-content: center;
   }
 
   .body {
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: var(--spacing);
+    grid-gap: 3rem;
     justify-items: center;
   }
 
