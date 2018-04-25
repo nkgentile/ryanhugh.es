@@ -67,6 +67,10 @@
   } from 'ramda';
 
   import {
+    localizeEntry,
+  } from '@/utils/contentful';
+
+  import {
     faChevronLeft as fasChevronLeft,
     faChevronRight as fasChevronRight,
   } from '@fortawesome/fontawesome-free-solid';
@@ -196,6 +200,8 @@
           }
         }
       },
+
+      localizeEntry: localizeEntry('en-US'),
     },
   };
 </script>

@@ -24,6 +24,6 @@ new Vue({
   template: '<App/>',
   components: { App },
   created(){
-    store.dispatch('fetch');
+    store.dispatch('portfolio/fetch');
   },
 })

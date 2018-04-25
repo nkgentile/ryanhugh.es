@@ -2,7 +2,7 @@ import client from '@/api';
 
 const actions = {
   async fetch({ commit, getters }){
-    const response = await client.sync({
+    /*const response = await client.sync({
       initial: true,
     });
 
@@ -10,6 +10,7 @@ const actions = {
 
     const { getEntry } = getters;
     commit('portfolio/setEntry', getEntry('portfolio'));
+    */
   },
 };
 

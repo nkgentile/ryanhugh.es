@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import modules from './modules';
-import initialState from './initialState';
+import state from './state';
 import getters from './getters';
 import mutations from './mutations';
 import actions from './actions';
@@ -14,8 +14,7 @@ const store = new Vuex.Store({
 
   modules,
 
-  state: initialState,
-
+  state,
   getters,
   mutations,
   actions,

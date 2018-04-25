@@ -37,38 +37,20 @@
     <footer :class="$style.text" v-html="markdown(project.fields.footnotes)"/>
 
     </main>
-
   </article-template>
 </template>
 
 <script>
-  import {
-    head,
-    lensPath,
-    path,
-    pipe,
-    view,
-    equals,
-    filter,
-    map,
-    pathEq,
-    _,
-    propEq,
-  } from 'ramda';
+  import store from '@/store';
 
   import {
     createNamespacedHelpers,
-    mapState,
-    mapGetters,
   } from 'vuex';
 
-  import {
-    localizeEntry,
-  } from '@/utils/contentful';
-
   const {
-    mapState: mapRouterState,
-  } = createNamespacedHelpers('route');
+    mapState,
+    mapActions,
+  } = createNamespacedHelpers('project');
 
   import ProjectGallery from '@/components/ProjectGallery';
   import ArticleTemplate from '@/templates/Article';
@@ -84,33 +66,31 @@
     },
 
     computed: {
-      ...mapRouterState([
-        'params'
-      ]),
+      ...mapState({
+        project: 'entry',
+      }),
+    },
 
-      ...mapGetters([
-        'getEntries',
-      ]),
+    methods: {
+      ...mapActions({
+        fetchProject: 'fetch',
+      }),
+    },
 
-      projects(){
-        return this.getEntries('project');
-      },
+    beforeRouteEnter({ params }, from, next){
+      const { slug } = params;
+      store.dispatch('project/fetch', {
+        slug,
+      });
+      next();
+    },
 
-      project(){
-        const { slug } = this.params;
-
-        const findProject = pipe(
-          filter(
-            pathEq(
-              ['fields', 'slug'],
-              slug
-            )
-          ),
-          head,
-        );
-
-        return findProject(this.projects) || {};
-      },
+    beforeRouteUpdate({ params }, from, next){
+      const { slug } = params;
+      store.dispatch('project/fetch', {
+        slug,
+      });
+      next();
     },
   }
 </script>

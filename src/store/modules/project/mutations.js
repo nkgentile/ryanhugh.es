@@ -1,5 +1,5 @@
 export default {
-  set(state, { items }){
+  setEntry(state, { items }){
     const [ entry ] = items;
 
     state.entry = {

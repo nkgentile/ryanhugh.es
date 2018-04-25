@@ -1,6 +1,5 @@
 <template>
   <async-image
-    v-if="!isEmpty(asset)"
     :src="src"
     :width="width"
     :height="height"
@@ -8,11 +7,10 @@
 </template>
 
 <script>
-  import { isEmpty } from 'ramda';
-
   import {
-    localizeEntry,
-  } from '@/utils/contentful';
+    identity,
+    pathOr,
+  } from 'ramda';
 
   import AsyncImage from '@/components/AsyncImage';
 
@@ -24,47 +22,34 @@
     props: {
       asset: {
         type: Object,
-        required: true,
-        default: () => ({}),
+        default: identity({}),
       },
     },
 
     computed: {
-      localizedAsset(){
-        return localizeEntry('en-US')(this.asset);
-      },
-
-      fields(){
-        return this.localizedAsset.fields;
-      },
-
-      file(){
-        return this.fields.file;
-      },
-
-      type(){
-        return this.file.contentType;
-      },
-
       src(){
-        return this.file.url;
-      },
-
-      details(){
-        return this.file.details;
+        return pathOr(
+          '',
+          ['fields', 'file', 'url'],
+          this.asset
+        );
       },
 
       width(){
-        return this.details.image.width;
+        return pathOr(
+          '',
+          ['fields', 'file', 'details', 'image', 'width'],
+          this.asset
+        );
       },
 
       height(){
-        return this.details.image.height;
+        return pathOr(
+          '',
+          ['fields', 'file', 'details', 'image', 'height'],
+          this.asset
+        );
       },
-    },
-
-    methods: {
-      isEmpty
     },
   }
 </script>

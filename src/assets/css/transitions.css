@@ -58,3 +58,22 @@
 .fade-leave {
   opacity: 1;
 }
+
+/* DECK */
+.deck-enter-active,
+.deck-leave-active {
+  transition: 5s opacity;
+}
+
+.deck-enter,
+.deck-leave-to {
+  opacity: 0;
+}
+
+.deck-leave,
+.deck-enter-to {
+  opacity: 1;
+}
+
+.deck-move {
+}

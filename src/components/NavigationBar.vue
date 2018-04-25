@@ -7,8 +7,8 @@
         </navigation-link>
         <ul :class="$style.children">
           <template v-for="(project) in projects">
-            <navigation-link :to="`/projects/${field('slug')(project)}`">
-              {{ field('name')(project) }}
+            <navigation-link :to="`/projects/${project.fields.slug}`">
+              {{ project.fields.name }}
             </navigation-link>
           </template>
         </ul>
@@ -20,7 +20,7 @@
         </navigation-link>
         <ul :class="$style.children">
           <template v-for="(account) in socialAccounts">
-            <navigation-link target="_blank" :href="field('url')(account)">{{ field('website')(account) }}</navigation-link>
+            <navigation-link target="_blank" :href="account.fields.url">{{ account.fields.website }}</navigation-link>
           </template>
         </ul>
       </li>
@@ -30,8 +30,6 @@
 
 <script>
   import {
-    isEmpty,
-    complement,
     pathOr,
   } from 'ramda';
 
@@ -39,12 +37,6 @@
     createNamespacedHelpers,
   } from 'vuex';
   const { mapState } = createNamespacedHelpers('portfolio');
-
-  import {
-    fieldOr,
-    field,
-    localizeEntry,
-  } from '@/utils/contentful';
 
   import NavigationLink from '@/components/NavigationLink';
 
@@ -59,20 +51,14 @@
       }),
 
       projects(){
-        return pathOr([], ['fields', 'projects'], this.portfolio)
-          .map(localizeEntry('en-US'));
+        return pathOr([], ['fields', 'projects'], this.portfolio);
       },
 
       socialAccounts(){
-        return pathOr([], ['fields', 'socialAccounts'], this.portfolio)
-          .map(localizeEntry('en-US'));
+        return pathOr([], ['fields', 'socialAccounts'], this.portfolio);
       },
     },
 
-    methods: {
-      isNotEmpty: complement(isEmpty),
-      field,
-    },
   };
 </script>
 

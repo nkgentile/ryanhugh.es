@@ -3,13 +3,23 @@
     :class="$style.container"
     :length="showcase.length"
   >
-    <template slot-scope="{ index }">
-      <project-card 
-        v-for="(project, i) in showcase"
-        :key="project.sys.id"
-        v-if="i === index"
-        :project="localizeEntry('en-US')(project)"
-      />
+    <template slot-scope="{ slides }">
+      <transition-group
+        :class="$style.list"
+        tag="ul"
+      >
+        <li
+          v-for="index in slides"
+          :key="showcase[index].sys.id"
+          :class="$style.item"
+        >
+          <project-card 
+            :key="showcase[index].sys.id"
+            :project="showcase[index]"
+            :class="$style.project"
+          />
+        </li>
+      </transition-group>
     </template>
   </touch-gallery>
 </template>
@@ -17,19 +27,12 @@
 <script>
   import {
     pathOr,
-    map,
-    compose,
   } from 'ramda';
 
   import {
     createNamespacedHelpers,
   } from 'vuex';
   const { mapState } = createNamespacedHelpers('portfolio');
-
-  import {
-    fieldOr,
-    localizeEntry,
-  } from '@/utils/contentful';
 
   import TouchGallery from '@/components/TouchGallery';
   import ProjectCard from '@/components/ProjectCardFullBleed';
@@ -46,12 +49,12 @@
       }),
 
       showcase(){
-        return pathOr([], ['fields', 'showcase'], this.portfolio);
+        return pathOr(
+          [], 
+          ['fields', 'showcase'],
+          this.portfolio
+        );
       },
-    },
-
-    methods: {
-      localizeEntry,
     },
   };
 </script>
@@ -63,5 +66,26 @@
     grid-template-rows: 1fr;
 
     overflow: hidden;
+  }
+
+  .list {
+    position: relative; 
+
+    display: flex;
+    flex-flow: row nowrap;
+
+    overflow: hidden;
+  }
+
+  .item {
+    flex: 0 0 100%;
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .project {
   }
 </style>

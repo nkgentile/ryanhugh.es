@@ -15,7 +15,8 @@ import {
 } from '@/utils/contentful';
 
 const getters = {
-  getEntries: ({ api: { entries } }) => (contentType) => {
+  /*
+  getEntries: ({ api: { entries = [] } }) => (contentType) => {
     const pathToContentType = [
       'sys',
       'contentType',
@@ -32,19 +33,11 @@ const getters = {
       equalToSelector,
     );
 
-    const transducer = compose(
-      filter(isOfType),
-      map(localizeEntry('en-US')),
-    );
-
-    return into(
-      [],
-      transducer,
-      entries
-    );
+    return filter(isOfType, entries);
   },
 
   getEntry: (state, { getEntries }) => pipe(getEntries, head),
+  */
 };
 
 export default getters;

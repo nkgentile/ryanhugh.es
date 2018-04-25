@@ -2,7 +2,7 @@
   <ul :class="$style.list">
     <template v-for="project in projects">
       <project-card
-        :project="localizeEntry(project)"
+        :project="project"
         :class="$style.item"
       />
     </template>
@@ -10,6 +10,8 @@
 </template>
 
 <script>
+  import store from '@/store';
+
   import { 
     createNamespacedHelpers,
   } from 'vuex';
@@ -18,12 +20,6 @@
   import {
     pathOr,
   } from 'ramda';
-
-  import {
-    fieldOr,
-    fieldPath,
-    localizeEntry,
-  } from '@/utils/contentful';
 
   import ProjectCard from '@/components/ProjectCardFullBleed';
 
@@ -40,10 +36,6 @@
       projects(){
         return pathOr([], ['fields', 'projects'], this.portfolio);
       },
-    },
-
-    methods: {
-      localizeEntry: localizeEntry('en-US'),
     },
   };
 </script>

@@ -1,7 +1,8 @@
 <template>
   <figcaption
+    v-if="isNotEmpty(asset)"
     :class="$style.container"
-    v-html="markdown(caption)"
+    v-html="markdown(asset.fields.description)"
   />
 </template>
 
@@ -10,22 +11,12 @@
     propOr,
   } from 'ramda';
 
-  import {
-    fieldOr,
-  } from '@/utils/contentful';
-
   export default {
     props: {
       asset: {
         type: Object,
         default: () => ({}),
       }
-    },
-
-    computed: {
-      caption(){
-        return fieldOr({}, 'description')(this.asset);
-      },
     },
   };
 </script>

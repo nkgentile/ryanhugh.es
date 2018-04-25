@@ -1,5 +1,7 @@
 <template>
-  <figure :class="$style.container">
+  <figure
+    :class="$style.container"
+  >
     <responsive-image :class="$style.image" :url="url"/>
   </figure>
 </template>
@@ -7,11 +9,8 @@
 <script>
   import {
     propOr,
+    pathOr,
   } from 'ramda';
-
-  import {
-    fieldOr,
-  } from '@/utils/contentful';
 
   import ResponsiveImage from '@/components/ResponsiveImage';
 
@@ -29,11 +28,11 @@
 
     computed: {
       image(){
-        return fieldOr({}, 'image')(this.asset);
+        return pathOr({}, ['fields', 'image'], this.asset);
       },
 
       file(){
-        return fieldOr({}, 'file')(this.image);
+        return pathOr({}, ['fields', 'file'], this.image);
       },
 
       url(){
