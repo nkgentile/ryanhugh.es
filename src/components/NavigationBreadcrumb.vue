@@ -1,5 +1,7 @@
 <template>
-  <app-breadcrumb>
+  <app-breadcrumb
+    :class="$style.breadcrumb"
+  >
     <navigation-link
       v-if="isNotRoot"
     >
@@ -38,4 +40,7 @@
 </script>
 
 <style module>
+  .breadcrumb *:first-child {
+    font-weight: bold;
+  }
 </style>
