@@ -273,6 +273,10 @@
     opacity: 1;
     pointer-events: auto;
   }
+  
+  .caption {
+    color: #555555;
+  }
 
   @media screen and (max-width: 900px) {
     .arrowIcon {

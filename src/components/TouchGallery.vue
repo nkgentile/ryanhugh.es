@@ -143,10 +143,10 @@
 
         switch(direction){
           case Hammer.DIRECTION_LEFT:
-            this.increment();
+            this.next();
             break;
           case Hammer.DIRECTION_RIGHT:
-            this.decrement();
+            this.previous();
             break;
           default:
             break;

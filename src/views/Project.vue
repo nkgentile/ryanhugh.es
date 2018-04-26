@@ -4,7 +4,7 @@
     :class="$style.container"
   >
     <header :class="$style.header">
-      <h1>{{ project.fields.name }}</h1>
+      <h1 :class="$style.title">{{ project.fields.name }}</h1>
     </header>
 
     <main :class="$style.body">
@@ -96,9 +96,20 @@
 </script>
 
 <style module>
+  .container {
+  }
+
   .header {
     display: grid;
     justify-content: center;
+
+    box-sizing: border-box;
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.33rem;
+    font-weight: bold;
   }
 
   .body {
@@ -106,6 +117,9 @@
     grid-template-columns: 1fr;
     grid-gap: 3rem;
     justify-items: center;
+
+    box-sizing: border-box;
+    padding-bottom: 3rem;
   }
 
   .text {
