@@ -2,6 +2,8 @@
   <touch-gallery
     :class="$style.container"
     :length="showcase.length"
+    navigation-color="white"
+    controls
   >
     <template slot-scope="{ slides }">
       <transition-group

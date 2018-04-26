@@ -1,58 +1,32 @@
 <template>
-  <v-touch
-    tag="section"
+  <TouchGallery
     :class="$style.container"
-    @swipe="onSwipe"
-    v-if="isNotEmpty(assets)"
+    :length="assets.length"
+    :controls="assets.length > 1"
   >
-    <div :class="$style['gallery']">
-      <div
-        :class="[$style.arrow, $style.arrowLeft]">
-        <fa-icon
-          v-if="assets.length > 1"
-          :icon="fasChevronLeft"
-          @click="decrement"
-          :class="{
-            [$style.arrowIcon]: true,
-            [$style.inactive]: isFirstItem,
-          }"
-        />
-      </div>
-
-      <transition name="fade">
-        <gallery-item
-          :asset="asset"
-          :key="asset.sys.id"
+    <template slot-scope="{ slides, active }">
+      <transition-group
+        :class="$style.gallery"
+        tag="ul"
+      >
+        <li
+          v-for="index in slides"
+          :key="assets[index].sys.id"
           :class="$style.item"
-        />
-      </transition>
+        >
+          <gallery-item
+            :asset="assets[index]"
+            :class="$style.asset"
+          />
+        </li>
+      </transition-group>
 
-      <div
-        :class="[$style.arrow, $style.arrowRight]">
-        <fa-icon
-          v-if="assets.length > 1"
-          :icon="fasChevronRight"
-          @click="increment"
-          :class="{
-            [$style.arrowIcon]: true,
-            [$style.inactive]: isLastItem,
-          }"
-        />
-      </div>
-    </div>
-
-    <gallery-caption
-      :asset="asset"
-      :class="$style.caption"
-    />
-    <gallery-navigator
-      :length="assets.length"
-      :index="index"
-      :class="$style.navigator"
-      :onNodeClick="setIndex"
-      v-if="assets.length > 1"
-    />
-  </v-touch>
+      <gallery-caption
+        :asset="assets[active]"
+        :class="$style.caption"
+      />
+    </template>
+  </TouchGallery>
 </template>
 
 <script>
@@ -80,6 +54,7 @@
   import GalleryItem from '@/components/ProjectGalleryItem';
   import GalleryCaption from '@/components/ProjectGalleryCaption';
   import GalleryNavigator from '@/components/ProjectGalleryNavigator';
+  import TouchGallery from '@/components/TouchGallery';
 
   export default {
     components: {
@@ -87,6 +62,7 @@
       GalleryItem,
       GalleryCaption,
       GalleryNavigator,
+      TouchGallery,
     },
 
     props: {
@@ -217,70 +193,31 @@
   }
 
   .gallery {
-    box-sizing: border-box;
-
-    display: grid;
-    grid-template-columns: 3rem 1fr 3rem;
-    grid-template-rows: 100%;
-
-    background-color: #fafafa;
+    display: flex;
+    flex-flow: row nowrap;
 
     position: relative;
+
+    pointer-events: none;
+
+    background-color: #fafafa;
   }
 
   .item {
-    min-width: 100%;
-    min-height: 100%;
+    flex: 0 0 100%;
+    height: 100%;
 
-    max-width: 100%;
-    max-height: 100%;
-
-    position: absolute;
-  }
-
-  .arrow {
     display: grid;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
 
-    opacity: 0;
     pointer-events: none;
-    transition: opacity 150ms ease-in-out;
   }
 
-  .arrow .arrowIcon {
-    cursor: pointer;
-
-    transition: transform 150ms ease-in-out;
-    transform: translateX(0);
+  .asset {
   }
 
-  .arrowLeft:hover .arrowIcon {
-    //transform: translateX(-100%);
-  }
-
-  .arrowRight:hover .arrowIcon {
-    //transform: translateX(100%);
-  }
-
-  .inactive {
-    color: gray;
-    cursor: auto;
-  }
-
-  .gallery:hover .arrow {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  
   .caption {
     color: #555555;
-  }
-
-  @media screen and (max-width: 900px) {
-    .arrowIcon {
-      display: none;
-    }
   }
 </style>

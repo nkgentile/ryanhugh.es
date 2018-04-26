@@ -5,9 +5,15 @@
     :class="$style.container"
     v-bind="$attrs"
   >
-    <slot :slides="slides"/>
+    <slot
+      :slides="slides"
+      :active="index"
+    />
 
-    <nav :class="$style.navigation">
+    <nav
+      v-if="controls"
+      :class="$style.navigation"
+    >
       <fa-icon
         :id="$style.left"
         :class="[
@@ -18,6 +24,9 @@
         ]"
         :icon="fasChevronLeft"
         @click="previous"
+        :style="{
+          color: navigationColor,
+        }"
       />
       <fa-icon
         :id="$style.right"
@@ -29,6 +38,9 @@
         ]"
         :icon="fasChevronRight"
         @click="next"
+        :style="{
+          color: navigationColor,
+        }"
       />
     </nav>
   </v-touch>
@@ -65,6 +77,16 @@
       length: {
         type: Number,
         default: identity(0),
+      },
+
+      controls: {
+        type: Boolean,
+        default: false,
+      },
+      
+      navigationColor: {
+        type: String,
+        default: 'black',
       },
     },
 
@@ -185,6 +207,8 @@
     pointer-events: auto;
     
     padding: 1rem;
+
+    transition: 150ms opacity ease-in-out;
   }
 
   .arrow.active {

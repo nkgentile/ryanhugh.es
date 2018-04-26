@@ -45,12 +45,9 @@
 <style module>
   .container {
     display: grid;
-    background-color: #fafafa;
   }
 
   .image {
-    pointer-events: none;
-
     width: 100%;
     height: 100%;
   }
