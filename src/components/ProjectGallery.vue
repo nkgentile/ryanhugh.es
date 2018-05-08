@@ -1,5 +1,6 @@
 <template>
   <TouchGallery
+    v-if="assets.length"
     :class="$style.container"
     :length="assets.length"
     :controls="assets.length > 1"
