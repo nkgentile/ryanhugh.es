@@ -44,7 +44,11 @@
   .list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 20rem;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(20em, 1fr)
+    );
+    grid-auto-rows: 25rem;
     grid-gap: 1rem;
   }
 
