@@ -200,7 +200,7 @@
 
     pointer-events: none;
 
-    background-color: #fafafa;
+    background-color: #fcfcfc;
   }
 
   .item {
