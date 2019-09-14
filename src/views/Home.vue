@@ -1,33 +1,18 @@
 <template>
-  <article>
-    <app-navigation :class="$style.navigation"/>
-    <showcase-projects/>
-  </article>
+  <div class="home">
+    <img alt="Vue logo" src="../assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  </div>
 </template>
 
 <script>
-  import AppNavigation from '@/components/AppNavigation';
-  import ShowcaseProjects from '@/components/ShowcaseProjects';
-  
-  export default {
-    components: {
-      AppNavigation,
-      ShowcaseProjects,
-    },
-  };
-</script>
+// @ is an alias to /src
+import HelloWorld from '@/components/HelloWorld.vue'
 
-<style module>
-  .navigation {
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100vw;
-    height: auto;
-
-    z-index: 1;
-
-    color: white;
+export default {
+  name: 'home',
+  components: {
+    HelloWorld
   }
-</style>
+}
+</script>
